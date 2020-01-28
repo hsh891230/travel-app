@@ -15,13 +15,30 @@
           <v-btn text @click="add" v-else>Add</v-btn>
         </v-toolbar-items>
       </v-toolbar>
-      <v-form lazy-validation ref="form">
-        <v-list three-line subheader>
+      <v-card-text>
+        <v-form lazy-validation ref="form">
+          <v-row>
+            <v-col cols="12">
+              <v-text-field label="Title" v-model="travel.title" required :rules="[v => !!v || 'Title is required']"></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-date-picker v-model="dates" range scrollable full-width :selected-items-text="selectedItemsText"></v-date-picker>
+            </v-col>
+            <v-col cols="6">
+              <v-text-field label="From" v-model="travel.from" readonly required :rules="[v => !!v || 'From date is required']"></v-text-field>
+            </v-col>
+            <v-col cols="6">
+              <v-text-field label="To" v-model="travel.to" readonly required :rules="[v => !!v || 'To date is required']"></v-text-field>
+            </v-col>
+          </v-row>
+        </v-form>
+      </v-card-text>
+      <!-- <v-list three-line subheader>
           <v-list-item>
             <v-text-field label="Title" v-model="travel.title" required :rules="[v => !!v || 'Title is required']"></v-text-field>
           </v-list-item>
           <v-list-item>
-            <v-date-picker v-model="dates" range scrollable landscape full-width selected-items-text="selected"></v-date-picker>
+            <v-date-picker v-model="dates" range scrollable full-width :selected-items-text="selectedItemsText"></v-date-picker>
           </v-list-item>
           <v-list-item>
             <v-text-field label="From" v-model="travel.from" readonly required :rules="[v => !!v || 'From date is required']"></v-text-field>
@@ -29,8 +46,7 @@
           <v-list-item>
             <v-text-field label="To" v-model="travel.to" readonly required :rules="[v => !!v || 'To date is required']"></v-text-field>
           </v-list-item>
-        </v-list>
-      </v-form>
+        </v-list> -->
     </v-card>
   </v-dialog>
 </template>
@@ -75,6 +91,9 @@ export default {
     },
     uid() {
       return this.$route.params.uid
+    },
+    selectedItemsText() {
+      return `${this.$moment(this.travel.from).format('YY.M.D(ddd)')} ~ ${this.$moment(this.travel.to).format('M.D(ddd)')}`
     }
   },
   watch: {
