@@ -1,0 +1,24 @@
+{
+  "editor.formatOnSave": true,
+  "vetur.format.defaultFormatter.html": "prettier",
+  "vetur.format.defaultFormatter.js": "prettier",
+  // "vetur.format.defaultFormatter.stylus": "stylus-supremacy",
+  "vetur.format.defaultFormatterOptions": {
+    // "prettyhtml": {
+    //   "wrapAttributes": false,
+    //   "sortAttributes": true
+    // },
+    // "prettier": {
+    //   "semi": false,
+    //   "singleQuote": true,
+    //   "printWidth": 120
+    // }
+  },
+  // "stylusSupremacy.insertBraces": false,
+  // "stylusSupremacy.insertColons": false,
+  // "stylusSupremacy.insertSemicolons": false,
+  "editor.rulers": [160],
+  "prettier.singleQuote": true,
+  "prettier.semi": false,
+  "prettier.printWidth": 160
+}
