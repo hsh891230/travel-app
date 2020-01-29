@@ -33,20 +33,6 @@
           </v-row>
         </v-form>
       </v-card-text>
-      <!-- <v-list three-line subheader>
-          <v-list-item>
-            <v-text-field label="Title" v-model="travel.title" required :rules="[v => !!v || 'Title is required']"></v-text-field>
-          </v-list-item>
-          <v-list-item>
-            <v-date-picker v-model="dates" range scrollable full-width :selected-items-text="selectedItemsText"></v-date-picker>
-          </v-list-item>
-          <v-list-item>
-            <v-text-field label="From" v-model="travel.from" readonly required :rules="[v => !!v || 'From date is required']"></v-text-field>
-          </v-list-item>
-          <v-list-item>
-            <v-text-field label="To" v-model="travel.to" readonly required :rules="[v => !!v || 'To date is required']"></v-text-field>
-          </v-list-item>
-        </v-list> -->
     </v-card>
   </v-dialog>
 </template>
@@ -56,7 +42,7 @@ import { getDefaultTravel, getDefaultSchedule, addTravel, updateTravel } from '.
 import _ from 'lodash'
 import { dateRange } from '../api/util'
 
-const hash = '#edit'
+const hash = '#travel-edit'
 
 export default {
   name: 'travel-dialog',
