@@ -24,8 +24,7 @@
 import TravelLocation from './TravelLocation'
 import { getDefaultLocation } from '../api/travels'
 import draggable from 'vuedraggable'
-import { createNamespacedHelpers } from 'vuex'
-const { mapState } = createNamespacedHelpers('travel')
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'travel-schedule',
@@ -33,9 +32,9 @@ export default {
   components: { TravelLocation, draggable },
   data: () => ({}),
   computed: {
-    ...mapState(['editable']),
+    ...mapState('travel', ['editable']),
     title() {
-      return `Day ${this.$vnode.key + 1}`
+      return `Day ${this.scheduleIndex + 1}`
     },
     dragOptions() {
       return {
@@ -47,17 +46,20 @@ export default {
     }
   },
   methods: {
+    ...mapActions('travel/location', ['openDialog']),
     addLocation() {
       // this.value.locations.push(getDefaultLocation())
       // this.$emit('update')
       // console.log(this.index)
+      this.openDialog({
+        scheduleIndex: this.scheduleIndex
+      })
     },
     deleteLocation(index) {
       this.schedule.locations.splice(index, 1)
     },
     log(event) {
       console.log(event)
-      console.log(arguments)
     }
   },
   watch: {

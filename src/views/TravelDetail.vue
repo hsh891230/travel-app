@@ -24,7 +24,6 @@
           <v-tab href="#tab-2">Tab 2</v-tab>
           <v-tab>Tab 3</v-tab>
         </v-tabs>
-
         <v-speed-dial v-model="fab" absolute bottom right direction="bottom" style="bottom: -20px">
           <template v-slot:activator>
             <v-btn v-if="fab" v-model="fab" color="red" dark small fab @click="cancelOrder">
@@ -52,20 +51,23 @@
         </v-tabs-items>
       </v-container>
     </v-content>
+    <travel-Location-dialog></travel-Location-dialog>
   </v-app>
 </template>
 
 <script>
-import TravelDialog from '../components/TravelDialog'
 import TravelSchedule from '../components/TravelSchedule'
+import TravelDialog from '../components/TravelDialog'
+import TravelLocationDialog from '../components/TravelLocationDialog'
+import { SET_TRAVEL, SET_EDITABLE, SET_UID, SET_ID } from '../store/modules/travel'
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapActions } = createNamespacedHelpers('travel')
+const { mapState, mapActions, mapMutations } = createNamespacedHelpers('travel')
 import { onTravel, getDefaultTravel, getDefaultLocation, updateTravel, getDefaultSchedule } from '../api/travels'
 import _ from 'lodash'
 
 export default {
   name: 'travel-detail',
-  components: { TravelDialog, TravelSchedule },
+  components: { TravelSchedule, TravelDialog, TravelLocationDialog },
   props: ['uid', 'id'],
   data: () => ({
     unsubscribe: null,
@@ -78,27 +80,32 @@ export default {
     ...mapState(['travel', 'editable'])
   },
   methods: {
-    ...mapActions(['setTravel', 'setEditable']),
+    ...mapMutations([SET_TRAVEL, SET_EDITABLE, SET_UID, SET_ID]),
     goList() {
       this.$router.push({ name: 'main', params: { uid: this.uid } })
     },
     editOrder() {
-      this.setEditable(true)
+      this[SET_EDITABLE](true)
     },
     cancelOrder() {
       this.editedTravel = _.cloneDeep(this.travel)
-      this.setEditable(false)
+      this[SET_EDITABLE](false)
     },
     async saveOrder() {
       await updateTravel(this.uid, this.id, this.editedTravel)
-      this.setEditable(false)
+      this[SET_EDITABLE](false)
     },
     updateTravel() {},
     changeTab() {}
   },
   created() {
+    if (this.unsubscribe) {
+      this.unsubscribe()
+    }
+    this[SET_UID](this.uid)
+    this[SET_ID](this.id)
     this.unsubscribe = onTravel(this.uid, this.id, doc => {
-      this.setTravel(_.cloneDeep(doc.data))
+      this[SET_TRAVEL](_.cloneDeep(doc.data))
       this.editedTravel = _.cloneDeep(doc.data)
     })
   },

@@ -42,7 +42,7 @@ import { getDefaultTravel, getDefaultSchedule, addTravel, updateTravel } from '.
 import _ from 'lodash'
 import { dateRange } from '../api/util'
 
-const hash = '#travel-edit'
+const hash = '#edit-travel'
 
 export default {
   name: 'travel-dialog',

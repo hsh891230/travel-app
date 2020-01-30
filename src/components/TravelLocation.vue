@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-const { mapState } = createNamespacedHelpers('travel')
+import { mapState, mapActions } from 'vuex'
+import _ from 'lodash'
 
 export default {
   name: 'travel-location',
@@ -31,14 +31,19 @@ export default {
     timePicker: false
   }),
   computed: {
-    ...mapState(['editable'])
+    ...mapState('travel', ['editable'])
   },
   methods: {
+    ...mapActions('travel/location', ['openDialog']),
     deleteLocation() {
       this.$emit('delete', this.locationIndex)
     },
     editLocation() {
-      console.log(1)
+      this.openDialog({
+        scheduleIndex: this.scheduleIndex,
+        locationIndex: this.locationIndex,
+        location: this.location
+      })
     }
   }
 }
