@@ -1,8 +1,9 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import { getUID } from './api/auth'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import { getUID } from './api/auth';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
+//
 
 const router = new VueRouter({
   base: '/',
@@ -23,13 +24,13 @@ const router = new VueRouter({
                 params: {
                   uid
                 }
-              })
+              });
             } else {
-              next({ name: 'login' })
+              next({ name: 'login' });
             }
-          })
+          });
         } else {
-          next()
+          next();
         }
       }
     },
@@ -62,7 +63,7 @@ const router = new VueRouter({
       component: () => import('@/components/Page404')
     }
   ]
-})
+});
 
 // router.beforeEach((to, from, next) => {
 //   getUID().then(uid => {
@@ -76,4 +77,4 @@ const router = new VueRouter({
 //   })
 // })
 
-export default router
+export default router;
